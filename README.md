@@ -21,6 +21,16 @@ npm run dev
 
 A aplicação sobe em `http://localhost:3000`.
 
+## Docker
+
+```bash
+docker build -t cadastro-pessoas:1.0.0 .
+docker run -d --name cadastro-pessoas -p 3000:3000 -v cadastro-dados:/app/data cadastro-pessoas:1.0.0
+```
+
+A imagem usa `node:24-alpine`, roda com usuário sem privilégios, possui `HEALTHCHECK` e
+persiste o banco SQLite no volume `/app/data`.
+
 ## Scripts
 
 | Script                     | Descrição                              |
