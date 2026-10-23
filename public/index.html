@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro de Pessoas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="brand">
+          <span class="brand__mark" aria-hidden="true">CP</span>
+          <span class="brand__name">Cadastro de Pessoas</span>
+        </div>
+        <span class="topbar__meta" id="contador">—</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel panel--list" aria-labelledby="titulo-lista">
+        <div class="panel__head">
+          <h1 id="titulo-lista">Pessoas</h1>
+          <label class="search">
+            <span class="sr-only">Buscar por nome ou CPF</span>
+            <input
+              id="busca"
+              type="search"
+              placeholder="Buscar por nome ou CPF"
+              autocomplete="off"
+            />
+          </label>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Nascimento</th>
+                <th scope="col" class="num">Idade</th>
+                <th scope="col"><span class="sr-only">Ações</span></th>
+              </tr>
+            </thead>
+            <tbody id="linhas"></tbody>
+          </table>
+          <p class="empty" id="vazio" hidden></p>
+        </div>
+      </section>
+
+      <aside class="panel panel--form" aria-labelledby="titulo-form">
+        <div class="panel__head">
+          <h2 id="titulo-form">Nova pessoa</h2>
+          <button type="button" class="link" id="cancelar" hidden>Cancelar edição</button>
+        </div>
+
+        <form id="form" novalidate>
+          <div class="field">
+            <label for="nome">Nome completo</label>
+            <input id="nome" name="nome" type="text" maxlength="120" autocomplete="name" />
+            <p class="field__error" data-erro="nome"></p>
+          </div>
+
+          <div class="field">
+            <label for="cpf">CPF</label>
+            <input
+              id="cpf"
+              name="cpf"
+              type="text"
+              inputmode="numeric"
+              placeholder="000.000.000-00"
+              maxlength="14"
+              class="mono"
+            />
+            <p class="field__error" data-erro="cpf"></p>
+          </div>
+
+          <div class="field">
+            <label for="dataNascimento">Data de nascimento</label>
+            <input id="dataNascimento" name="dataNascimento" type="date" />
+            <p class="field__hint" id="idade-previa"></p>
+            <p class="field__error" data-erro="dataNascimento"></p>
+          </div>
+
+          <button type="submit" class="btn" id="salvar">Cadastrar</button>
+        </form>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
