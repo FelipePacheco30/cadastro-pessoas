@@ -9,11 +9,14 @@ import { pessoasRouter } from './routes/pessoas.routes.js';
 const PUBLIC_DIR = fileURLToPath(new URL('../../public', import.meta.url));
 
 export function createApp({ databaseFile = ':memory:', clock } = {}) {
-  const repository = createPessoaRepository(openDatabase(databaseFile));
+  const database = openDatabase(databaseFile);
+  const repository = createPessoaRepository(database);
   const service = createPessoaService({ repository, clock });
 
   const app = express();
-  app.use(express.json());
+  app.disable('x-powered-by');
+  app.locals.database = database;
+  app.use(express.json({ limit: '10kb' }));
   app.use(express.static(PUBLIC_DIR));
 
   app.get('/health', (_req, res) => res.json({ status: 'ok' }));
@@ -24,6 +27,12 @@ export function createApp({ databaseFile = ':memory:', clock } = {}) {
   app.use((error, _req, res, _next) => {
     if (error instanceof AppError) {
       return res.status(error.status).json({ erro: error.message, detalhes: error.detalhes });
+    }
+    if (error.type === 'entity.parse.failed') {
+      return res.status(400).json({ erro: 'JSON inválido no corpo da requisição' });
+    }
+    if (error.type === 'entity.too.large') {
+      return res.status(413).json({ erro: 'Corpo da requisição muito grande' });
     }
     console.error(error);
     return res.status(500).json({ erro: 'Erro interno do servidor' });
