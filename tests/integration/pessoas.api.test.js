@@ -85,4 +85,19 @@ describe('API /api/pessoas', () => {
   it('retorna 400 para id não numérico', async () => {
     expect((await request(app).get('/api/pessoas/abc')).status).toBe(400);
   });
+
+  it('retorna 400 quando o corpo não é um JSON válido', async () => {
+    const res = await request(app)
+      .post('/api/pessoas')
+      .set('Content-Type', 'application/json')
+      .send('{"nome": ');
+
+    expect(res.status).toBe(400);
+    expect(res.body.erro).toBe('JSON inválido no corpo da requisição');
+  });
+
+  it('não expõe o header X-Powered-By', async () => {
+    const res = await request(app).get('/health');
+    expect(res.headers['x-powered-by']).toBeUndefined();
+  });
 });
