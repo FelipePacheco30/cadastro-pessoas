@@ -5,7 +5,8 @@ export function calcularIdade(dataNascimento, hoje = new Date()) {
   const mesAtual = hoje.getMonth();
   const mesNascimento = nascimento.getMonth();
   const aniversarioPendente =
-    mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < nascimento.getDate());
+    mesAtual < mesNascimento ||
+    (mesAtual === mesNascimento && hoje.getDate() < nascimento.getDate());
 
   if (aniversarioPendente) idade -= 1;
   return idade;

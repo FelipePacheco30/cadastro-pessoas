@@ -37,7 +37,9 @@ describe('API /api/pessoas', () => {
 
   it('POST retorna 409 quando o CPF já está cadastrado', async () => {
     await request(app).post('/api/pessoas').send(maria);
-    const res = await request(app).post('/api/pessoas').send({ ...maria, nome: 'Outra Maria' });
+    const res = await request(app)
+      .post('/api/pessoas')
+      .send({ ...maria, nome: 'Outra Maria' });
 
     expect(res.status).toBe(409);
   });

@@ -22,11 +22,15 @@ describe('validarPessoa', () => {
   });
 
   it('rejeita CPF inválido', () => {
-    expect(validarPessoa({ ...valido, cpf: '123.456.789-00' }, hoje).erros.cpf).toBe('CPF inválido');
+    expect(validarPessoa({ ...valido, cpf: '123.456.789-00' }, hoje).erros.cpf).toBe(
+      'CPF inválido',
+    );
   });
 
   it.each(['20/06/1995', '1995-02-30', '', 'abc'])('rejeita data mal formatada %s', (data) => {
-    expect(validarPessoa({ ...valido, dataNascimento: data }, hoje).erros.dataNascimento).toBeDefined();
+    expect(
+      validarPessoa({ ...valido, dataNascimento: data }, hoje).erros.dataNascimento,
+    ).toBeDefined();
   });
 
   it('rejeita data de nascimento no futuro', () => {

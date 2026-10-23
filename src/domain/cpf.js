@@ -6,7 +6,10 @@ export function normalizarCpf(cpf) {
 
 function calcularDigito(base) {
   const pesoInicial = base.length + 1;
-  const soma = [...base].reduce((total, digito, i) => total + Number(digito) * (pesoInicial - i), 0);
+  const soma = [...base].reduce(
+    (total, digito, i) => total + Number(digito) * (pesoInicial - i),
+    0,
+  );
   const resto = soma % 11;
   return resto < 2 ? 0 : 11 - resto;
 }
