@@ -1,6 +1,6 @@
 {
   "name": "cadastro-pessoas",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "CRUD de pessoas (CPF, nome, data de nascimento e idade) desenvolvido com TDD.",
   "type": "module",
   "main": "src/server.js",
